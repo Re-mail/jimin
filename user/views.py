@@ -3,6 +3,7 @@ from django.db import transaction
 from .models import User
 from argon2 import PasswordHasher
 from .forms import RegisterForm, LoginForm
+from remailbox.views import mailbox
 
 # Create your views here.
 def register(request):
@@ -59,7 +60,7 @@ def login(request):
         if loginform.is_valid():
             request.session['login_session'] = loginform.login_session #수정
             request.session.set_expiry(0)
-            return redirect('/')
+            return redirect('mailbox')
         else:
             context['forms'] = loginform
             if loginform.errors:

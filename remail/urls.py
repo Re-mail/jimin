@@ -24,4 +24,5 @@ urlpatterns = [
     path('home/', include('home.urls')),
     path('', RedirectView.as_view(url="home/", permanent=True)),
     path('user/', include('user.urls')),
+    path('remailbox/', include('remailbox.urls')),
 ]
