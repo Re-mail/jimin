@@ -76,27 +76,27 @@ class RegisterForm(forms.ModelForm):
             return self.add_error('user_pw_confirm','비밀번호가 다릅니다.')
         elif 8 > len(user_pw):
             return self.add_error('user_pw','비밀번호는 8자 이상으로 적어주세요.')
-        # elif not check_pw(user_pw):
-        #     return self.add_error('user_pw','비밀번호 조합규칙에 맞지 않습니다.')
+        elif not check_pw(user_pw):
+            return self.add_error('user_pw','비밀번호 조합규칙에 맞지 않습니다. 3종 이상 문자로 구성된 8자리 이상 비밀번호를 입력해주세요')
         else:
             self.user_email = user_email
             self.user_name = user_name
             self.user_pw = PasswordHasher().hash(user_pw)
             self.user_pw_confirm = user_pw_confirm
 
-# def check_pw(password):
-#     PT1 = re.compile('^(?=.*[A-Z](?=.*[a-z])[A-Za-z\d!@#$%^&*]{8,}$')
-#     PT2 = re.compile('^(?=.*[A-Z](?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$')
-#     PT3 = re.compile('^(?=.*[A-Z](?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$')
-#     PT4 = re.compile('^(?=.*[a-z](?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$')
-#     PT5 = re.compile('^(?=.*[a-z](?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$')
-#     PT6 = re.compile('^(?=.*\d(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$')
-#     PT7 = re.compile('^[A-Za-z\d!@#$%^&*]{10,}$')
+def check_pw(password):
+    PT1 = re.compile('^(?=.*[A-Z])(?=.*[a-z])[A-Za-z\d!@#$%^&*]{8,}$') 
+    PT2 = re.compile('^(?=.*[A-Z])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$')
+    PT3 = re.compile('^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$') 
+    PT4 = re.compile('^(?=.*[a-z])(?=.*\d)[A-Za-z\d!@#$%^&*]{8,}$')
+    PT5 = re.compile('^(?=.*[a-z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$') 
+    PT6 = re.compile('^(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$')
+    PT7 = re.compile('^[A-Za-z\d!@#$%^&*]{10,}$')
 
-#     for pattern in [PT1,PT2,PT3,PT4,PT5,PT6,PT7]:
-#         if pattern.match(password):
-#             return True
-#         return False
+    for pattern in [PT1,PT2,PT3,PT4,PT5,PT6,PT7]:
+        if pattern.match(password):
+            return True
+        return False
 
 class LoginForm(forms.Form):
     user_email = forms.EmailField(
