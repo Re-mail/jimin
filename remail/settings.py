@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'home',
     'user',
     'remailbox',
+    'mypage',
 ]
 
 MIDDLEWARE = [
