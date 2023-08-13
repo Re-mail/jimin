@@ -7,8 +7,14 @@
     <body>
         <h1>Hello!</h1>
         <a href="/"><button>home</button></a>
+
+        {% if login_session %}
+        <a href="{% url 'user:logout' %}"><button>log out</button></a>
+        {% else %}
         <a href="{% url 'user:login' %}"><button>log in</button></a>
         <a href="{% url 'user:register' %}"><button>sign up</button></a>
+        {% endif %}
+
         {% block contents %}
         {% endblock contents %}
     </body>
