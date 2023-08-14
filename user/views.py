@@ -5,6 +5,7 @@ from argon2 import PasswordHasher
 from .forms import RegisterForm, LoginForm
 from remailbox.views import mailbox
 
+
 # Create your views here.
 def register(request):
     register_form = RegisterForm()
@@ -66,8 +67,8 @@ def login(request):
             if loginform.errors:
                 for value in loginform.errors.values():
                     context['error'] = value
-        return render(request, 'uesr/login.html', context)
-#수정  
+        return render(request, 'user/login.html', context)
+
 def logout(request):
     request.session.flush()
     return redirect('/')

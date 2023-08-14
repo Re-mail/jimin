@@ -72,7 +72,12 @@ class RegisterForm(forms.ModelForm):
         user_pw = cleaned_data.get('user_pw','')
         user_pw_confirm = cleaned_data.get('user_pw_confirm','')
 
-        if user_pw !=user_pw_confirm:
+        idobject = User.objects.filter(user_email = user_email)
+        idcount = idobject.count()
+
+        if idcount > 0:
+            return self.add_error('user_email','이미 존재하는 이메일입니다.')
+        elif user_pw !=user_pw_confirm:
             return self.add_error('user_pw_confirm','비밀번호가 다릅니다.')
         elif 8 > len(user_pw):
             return self.add_error('user_pw','비밀번호는 8자 이상으로 적어주세요.')
@@ -143,7 +148,7 @@ class LoginForm(forms.Form):
                 user = User.objects.get(user_email=user_email)
             except User.DoesNotExist:
                 return self.add_error('user_email', '이메일이 존재하지 않습니다')
-            
+             
             try:
                 PasswordHasher().verify(user.user_pw, user_pw)
             except exceptions.VerifyMismatchError:
