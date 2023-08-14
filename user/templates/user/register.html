@@ -1,7 +1,6 @@
 {% extends 'home/index.html' %}
 
 {% block contents %}
-<div>sign up page</div>
 
 <form action="" method="POST">
     {% csrf_token %}
@@ -16,6 +15,7 @@
     {% if error %}
     {{error}}
     {% endif %}
-    <button type="submit" name="register-submit" value="register">제출</button>
+    <div class='button'><input type="submit" id="signupb" value="제출"></div>
+    <!-- <button type="submit" name="register-submit" value="register">제출</button> -->
 </form>
 {% endblock contents %}
